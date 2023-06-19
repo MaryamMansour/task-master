@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_do/screens/setting_screen.dart';
 import 'package:to_do/screens/tasks_screen.dart';
+import 'package:to_do/shared/styles/app_colors.dart';
 
 import '../screens/widgets/show_add_task_bottom_sheet.dart';
 
@@ -21,15 +22,17 @@ class _HomeLayoutState extends State<HomeLayout> {
       appBar: AppBar(
         title: Text(
           "ToDo App",
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked ,
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          showAddTaskBottomSheet();
+          showAddTaskBottomSheetf();
         },
+        backgroundColor: darkPurple,
       child: Icon(Icons.add,size: 30,),
+
       shape: StadiumBorder(
        side: BorderSide(
          color:  Colors.white,
@@ -65,13 +68,14 @@ class _HomeLayoutState extends State<HomeLayout> {
 
    showAddTaskBottomSheetf(){
     showModalBottomSheet(context: context,
-      isScrollControlled: true,
+     isScrollControlled: true,
       builder: (context){
       return Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom
+          bottom: MediaQuery.of(context).viewInsets.bottom//padding for Keyboard only from bottom
         ),
           child: showAddTaskBottomSheet());
     },);
   }
+
 }

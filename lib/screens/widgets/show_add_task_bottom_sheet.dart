@@ -11,22 +11,23 @@ class showAddTaskBottomSheet extends StatefulWidget {
 
 class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
   var formKey= GlobalKey<FormState>();
-
+  String selected=DateTime.now().toString().substring(0,10);
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8.0),
-      child: Form(
-        key: formKey,
+      child: Form( //text form field should be inside Form
+        key: formKey, //Form widget should be stateful
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text("Add New Task", style: Theme.of(context).textTheme.bodyMedium
               !.copyWith(color: Colors.black),),
-            SizedBox(
+            const SizedBox(
                 height: 25,
               ),
             TextFormField(
+              textInputAction: TextInputAction.next,//ممكن اعمله  new line
                 validator: (value){
                   if (value == null || value.isEmpty) {
                     return "please enter task title";
@@ -44,10 +45,12 @@ class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
               )
               ),
         ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
+
             TextFormField(
+              maxLines: 3,
               validator: (value){
                 if (value == null || value.isEmpty) {
                   return "please enter task description";
@@ -67,14 +70,14 @@ class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
                   )
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            Container(
+            SizedBox(
               width:double.infinity ,
               child: Text("Select Date"
                 ,textAlign: TextAlign.start
-                ,style: Theme.of(context).textTheme.bodySmall
+                ,style: Theme.of(context).textTheme.bodyMedium
               !.copyWith(
                 color: Colors.black
               ),),
@@ -83,7 +86,7 @@ class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
               onTap: (){
                 chooseDate(context);
               },
-                child: Text("12/12/2012", textAlign: TextAlign.center,)),
+                child: Text(selected, textAlign: TextAlign.center,)),
             Container(
               width: MediaQuery.of(context).size.width*.5,
                 child: ElevatedButton(
@@ -99,8 +102,8 @@ class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
     );
   }
 
-  chooseDate(BuildContext context){
-    showDatePicker(
+  chooseDate(BuildContext context)async{
+    DateTime? selectedDate= await showDatePicker(
         context: context,
         builder: (context, child) => Theme(data: Theme.of(context).copyWith(
           colorScheme: ColorScheme.light(
@@ -113,6 +116,11 @@ class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(Duration(days: 365),
         ),
-    );
+    ); if(selectedDate!=null){
+      selected = selectedDate.toString().substring(0,10);
+      setState(() {
+        
+      });
+    }
   }
 }
