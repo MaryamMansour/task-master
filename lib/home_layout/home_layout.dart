@@ -33,7 +33,7 @@ class _HomeLayoutState extends State<HomeLayout> {
         backgroundColor: darkPurple,
       child: Icon(Icons.add,size: 30,),
 
-      shape: StadiumBorder(
+      shape: const StadiumBorder(
        side: BorderSide(
          color:  Colors.white,
          width: 3

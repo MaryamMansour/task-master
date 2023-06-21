@@ -1,5 +1,8 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do/screens/widgets/task_item.dart';
+
+import '../shared/styles/app_colors.dart';
 
 class TasksScreen extends StatefulWidget {
 
@@ -18,7 +21,7 @@ class _TasksScreenState extends State<TasksScreen> {
         DatePicker(
           DateTime.now(),
           initialSelectedDate: DateTime.now(),
-          selectionColor: Colors.black,
+          selectionColor: darkPurple2,
           selectedTextColor: Colors.white,
           height: 120,
           onDateChange: (newdate) {
@@ -28,6 +31,10 @@ class _TasksScreenState extends State<TasksScreen> {
             });
           },
         ),
+        
+        Expanded(child: ListView.builder(itemBuilder: (context, index){
+        return TaskItem();
+        },itemCount: 10,))
       ],
     );
   }
