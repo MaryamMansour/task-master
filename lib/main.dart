@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do/screens/edit_screen.dart';
 import 'firebase_options.dart';
 import 'home_layout/home_layout.dart';
 import 'shared/styles/my_theme.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       initialRoute: HomeLayout.routeName,
       routes: {
         HomeLayout.routeName: (context) => HomeLayout(),
+        EditScreen.routeName: (context) => EditScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

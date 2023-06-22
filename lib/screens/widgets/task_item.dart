@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/network/firebase/firebase_functions.dart';
+import 'package:to_do/screens/edit_screen.dart';
 import 'package:to_do/shared/styles/app_colors.dart';
 
 class TaskItem extends StatelessWidget {
@@ -41,7 +42,10 @@ class TaskItem extends StatelessWidget {
             ),
             SlidableAction(
               // An action can be bigger than the others
-              onPressed: (context){},
+              onPressed: (context){
+                Navigator.pushNamed(context, EditScreen.routeName,
+                arguments: task);
+              },
               autoClose: true,
               backgroundColor: primaryColor,
               foregroundColor: Colors.white,
