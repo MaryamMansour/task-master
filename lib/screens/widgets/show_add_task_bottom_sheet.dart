@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do/models/task_model.dart';
+import 'package:to_do/network/firebase/firebase_functions.dart';
 
 import '../../shared/styles/app_colors.dart';
 
@@ -11,8 +13,17 @@ class showAddTaskBottomSheet extends StatefulWidget {
 
 class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
   var formKey= GlobalKey<FormState>();
-  String selected=DateTime.now().toString().substring(0,10);
+  var selected=DateUtils.dateOnly(DateTime.now());
   @override
+
+  var titleController = TextEditingController();
+  var descriptionController = TextEditingController();
+
+
+
+
+
+
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8.0),
@@ -28,6 +39,7 @@ class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
               ),
             TextFormField(
               textInputAction: TextInputAction.next,//ممكن اعمله  new line
+              controller: titleController,
                 validator: (value){
                   if (value == null || value.isEmpty) {
                     return "please enter task title";
@@ -51,6 +63,7 @@ class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
 
             TextFormField(
               maxLines: 3,
+              controller: descriptionController,
               validator: (value){
                 if (value == null || value.isEmpty) {
                   return "please enter task description";
@@ -86,13 +99,20 @@ class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
               onTap: (){
                 chooseDate(context);
               },
-                child: Text(selected, textAlign: TextAlign.center,)),
+                child: Text(selected.toString().substring(0,10),
+                  textAlign: TextAlign.center,)),
             Container(
               width: MediaQuery.of(context).size.width*.5,
                 child: ElevatedButton(
                     onPressed: (){
                       if (formKey.currentState!.validate()){
-
+                        TaskModel task= TaskModel(
+                            title: titleController.text,
+                            date: selected.microsecondsSinceEpoch,
+                            description: descriptionController.text,
+                            status: false);
+                        FireBaseFunctions.addTaskToFirestore(task).then((value) =>
+                        Navigator.pop(context));
                       }
                     },
                     child: Text("Add Task")))
@@ -117,7 +137,7 @@ class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
         lastDate: DateTime.now().add(Duration(days: 365),
         ),
     ); if(selectedDate!=null){
-      selected = selectedDate.toString().substring(0,10);
+      selected =DateUtils.dateOnly(selectedDate);
       setState(() {
         
       });
