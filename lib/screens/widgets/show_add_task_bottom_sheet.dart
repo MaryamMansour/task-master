@@ -108,8 +108,8 @@ class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
                             date: selected.microsecondsSinceEpoch,
                             description: descriptionController.text,
                             status: false);
-                        FireBaseFunctions.addTaskToFirestore(task).then((value) =>
-                        Navigator.pop(context));
+                        FireBaseFunctions.addTaskToFirestore(task);
+                        Navigator.pop(context);
                       }
                     },
                     child: Text("Add Task")))

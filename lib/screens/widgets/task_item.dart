@@ -74,15 +74,23 @@ class TaskItem extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width*.05,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(task.title,style: Theme.of(context)
-                      .textTheme.bodyLarge!.copyWith
-                    (color: task.status?Colors.green: Colors.black)),
-                  SizedBox(height: 12,),
-                  Text(task.description,style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 10,color: Colors.black54),)
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(task.title,style: Theme.of(context)
+                        .textTheme.bodyLarge!.copyWith
+                      (color: task.status?Colors.green: Colors.black)),
+                    SizedBox(height: 12,),
+                    Text(
+                      task.description,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+
+
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 10,color: Colors.black54),)
+                  ],
+                ),
               ),
               Spacer(),
               task.status?
