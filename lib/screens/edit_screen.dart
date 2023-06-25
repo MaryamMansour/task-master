@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do/home_layout/home_layout.dart';
 import 'package:to_do/screens/widgets/show_add_task_bottom_sheet.dart';
@@ -103,6 +104,7 @@ class _EditScreenState extends State<EditScreen> {
                 ElevatedButton(onPressed: (){
 
                 TaskModel task= TaskModel(
+                  userId: FirebaseAuth.instance.currentUser!.uid,
                 id: args.id,
                 title: titleController.text,
                     date: selected.microsecondsSinceEpoch,

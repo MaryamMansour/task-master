@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do/home_layout/home_layout.dart';
+import 'package:to_do/network/firebase/firebase_functions.dart';
 import 'package:to_do/screens/create_account.dart';
+
+import '../my_provider.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName = "LoginScreen";
@@ -10,6 +15,8 @@ class LoginScreen extends StatelessWidget {
   var formKey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    var provider =Provider.of<MyProvider>(context);
+
     return Scaffold(
       //another way other than single child to avoid keyboard over flow
       resizeToAvoidBottomInset: false,
@@ -94,7 +101,28 @@ class LoginScreen extends StatelessWidget {
                   ElevatedButton(onPressed: (){
                     if(formKey.currentState!.validate())
                       {
+                        FireBaseFunctions.Login(emailController.text, 
+                            PassController.text,
+                            (value){
+                          showDialog(context: context,barrierDismissible: false ,
+                              builder: (context) =>
+                              AlertDialog(
 
+                                title:Text("Error"),
+                                  content: Text(value),
+                                actions: [
+                                  ElevatedButton(onPressed: (){
+                                    Navigator.pop(context);
+                                  },
+                                      child:Text( "OK")),
+                                ],
+                              ),);
+                            },
+                            (){
+                          provider.initUser();
+                          Navigator.pushReplacementNamed(context, HomeLayout.routeName);
+                            }
+                        );
 
                       }
                   }

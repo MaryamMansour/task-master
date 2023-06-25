@@ -1,11 +1,14 @@
 import 'dart:developer';
 
 class TaskModel{
+  static const String COLLECTION_NAME="Tasks";
+
   String id;
   String title;
   String description;
   int date;
   bool status;
+  String userId;
 
 
 
@@ -13,7 +16,8 @@ class TaskModel{
     required this.title,
     required this.date,
     required this.description,
-    required this.status});
+    required this.status,
+    required this.userId});
 
   //     As a named Constructor
   TaskModel.fromJson(Map<String, dynamic>json): this(
@@ -21,7 +25,8 @@ class TaskModel{
       title: json['title'],
       date: json['date'],
       description: json['description'],
-      status: json['status']
+      status: json['status'],
+    userId: json['userId']
   );
 
   //      As a Function
@@ -47,7 +52,8 @@ class TaskModel{
       "title":title,
       "date":date,
       "description":description,
-      "status":status
+      "status":status,
+      "userId":userId
     };
     return json;
   }
