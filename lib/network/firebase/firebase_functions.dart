@@ -57,29 +57,29 @@ static Future<UserModel?> readUser(String id)async{
 
 
 
-static void createAcoount (String name, int age,String email, String password, Function created)async{
-  try {
-    final credential = await FirebaseAuth.instance.
-    createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    //credential.user!.sendEmailVerification(); email verify
-    //FirebaseAuth.instance.sendPasswordResetEmail(email: "email")
-    UserModel userModel = UserModel(id: credential.user!.uid
-        ,name: name, email: email, age: age);
-  addUserToFirestore(userModel).then((value) { created();});
-
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'weak-password') {
-      print(e.message);
-    } else if (e.code == 'email-already-in-use') {
-      print(e.message);
-    }
-  } catch (e) {
-    print(e);
-  }
-}
+// static void createAcoount (String name, int age,String email, String password, Function created)async{
+//   try {
+//     final credential = await FirebaseAuth.instance.
+//     createUserWithEmailAndPassword(
+//       email: email,
+//       password: password,
+//     );
+//     //credential.user!.sendEmailVerification(); email verify
+//     //FirebaseAuth.instance.sendPasswordResetEmail(email: "email")
+//     UserModel userModel = UserModel(id: credential.user!.uid
+//         ,name: name, email: email, age: age);
+//   addUserToFirestore(userModel).then((value) { created();});
+//
+//   } on FirebaseAuthException catch (e) {
+//     if (e.code == 'weak-password') {
+//       print(e.message);
+//     } else if (e.code == 'email-already-in-use') {
+//       print(e.message);
+//     }
+//   } catch (e) {
+//     print(e);
+//   }
+// }
 
 
 
@@ -106,23 +106,10 @@ static void createAcoount (String name, int age,String email, String password, F
       return docRef.set(user);
   }
 
-  static void Login(String email, String password , Function onError,Function logged )async
-  {
-    try {
-      final credential = await FirebaseAuth.instance.
-      signInWithEmailAndPassword(
-          email: email,
-          password: password
-      );
-     logged();
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-       onError(e.message);
-      } else if (e.code == 'wrong-password') {
-        onError(e.message);
-      }
-    }
-  }
+  // static void Login(String email, String password , Function onError,Function logged )async
+  // {
+  //
+  // }
 
 
 }
