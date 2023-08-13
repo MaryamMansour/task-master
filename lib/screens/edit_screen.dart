@@ -29,7 +29,7 @@ class _EditScreenState extends State<EditScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "ToDo App",
+          "Task Master",
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
         ),
       ),
@@ -48,7 +48,8 @@ class _EditScreenState extends State<EditScreen> {
               children: [
                 SizedBox(height: 20,),
                 Text("Task Title", style: Theme.of(context).textTheme
-                  .bodyLarge,),
+                  .bodyLarge!.copyWith(
+                    color: Colors.black26),),
                 SizedBox(height: 10,),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -71,7 +72,9 @@ class _EditScreenState extends State<EditScreen> {
                 ),
                 SizedBox(height: 30,),
                 Text("Task Discription", style: Theme.of(context).textTheme
-                    .bodyLarge,),
+                    .bodyLarge!.copyWith(
+                    color: Colors.black26
+                )),
                 SizedBox(height: 10,),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -98,10 +101,13 @@ class _EditScreenState extends State<EditScreen> {
                   onTap: (){
                   chooseDate(context);
                   },
-                    child: Text(selected.toString().substring(0,10))),
+                    child: Text(selected.toString().substring(0,10), style: TextStyle(color: Colors.black),)),
                 SizedBox(height: 15,),
 
-                ElevatedButton(onPressed: (){
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: darkPurple2,),
+                    onPressed: (){
 
                 TaskModel task= TaskModel(
                   userId: FirebaseAuth.instance.currentUser!.uid,

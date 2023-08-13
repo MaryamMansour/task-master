@@ -98,10 +98,13 @@ class _showAddTaskBottomSheetState extends State<showAddTaskBottomSheet> {
                 chooseDate(context);
               },
                 child: Text(selected.toString().substring(0,10),
-                  textAlign: TextAlign.center,)),
+                  textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black))),
             Container(
               width: MediaQuery.of(context).size.width*.5,
                 child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: darkPurple2,),
                     onPressed: (){
                       if (formKey.currentState!.validate()){
                         TaskModel task= TaskModel(
