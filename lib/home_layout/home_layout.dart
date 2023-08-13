@@ -28,7 +28,7 @@ class _HomeLayoutState extends State<HomeLayout> {
       extendBody: true,
       appBar: AppBar(
         title: Text(
-          "ToDo App${provider.myUser?.name}",
+          "Hello ${provider.myUser?.name} ",
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
 
         ),

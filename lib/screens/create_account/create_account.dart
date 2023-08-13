@@ -7,6 +7,7 @@ import 'package:to_do/shared/base.dart';
 
 import '../../home_layout/home_layout.dart';
 import '../../my_provider.dart';
+import '../../shared/styles/app_colors.dart';
 import '../login/login.dart';
 import 'create_account_connector.dart';
 
@@ -47,152 +48,166 @@ class _CreateAcoountState extends BaseView<SignUpViewModel, CreateAcoount> imple
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(
-            "ToDo",
+            "Task Master",
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
                 .copyWith(color: Colors.white),
           ),
         ),
-        body: Card(
-          margin: const EdgeInsets.all(20),
-          child: SingleChildScrollView(
-            child: Expanded(
-              child: Container(
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Craete Acoount",
-                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                color: Colors.black26,
-                                fontSize: 30,
-                              )),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: nameController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "please enter name";
-                            }
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
 
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              label: Text("Name"),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: Colors.blue))),
+              Container(
+                width: 200,
+                height: 200,
+                color: Colors.transparent, // Container background color
+                child: Image.asset('assets/time2.png'), // Replace with your image path
+              ),
+              Card(
+                margin: const EdgeInsets.all(20),
+                child: SingleChildScrollView(
+                  child: Expanded(
+                    child: Container(
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Create Account",
+                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      color: Colors.black26,
+                                      fontSize: 30,
+                                    )),
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                controller: nameController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "please enter name";
+                                  }
+
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                    label: Text("Name"),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(color: Colors.blue))),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                controller: ageController,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                    label: Text("Age"),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(color: Colors.blue))),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                controller: emailController,
+                                validator: (value) {
+                                  bool emailValid = RegExp(
+                                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                      .hasMatch(value!);
+                                  if (value.isEmpty) {
+                                    return "please enter email";
+                                  } else if (!emailValid) {
+                                    return "Please enter valid email";
+                                  }
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                    label: Text("Email"),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(color: Colors.blue))),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                controller: PassController,
+                                obscureText: true,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "please enter Password";
+                                  }
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                    label: Text("Password"),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(color: Colors.blue),
+                                    )),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: darkPurple2),
+                                onPressed: () {
+                                  // viewModel.SignUp(emailController.text,
+                                  //     PassController.text, nameController.text, int.parse(ageController.text));
+                                  FireBaseFunctions.createAcoount(
+                                      nameController.text,
+                                      int.parse(ageController.text),
+                                      emailController.text,
+                                      PassController.text, () {
+                                        provider.initUser();
+                                    Navigator.pushReplacementNamed(
+                                        context, HomeLayout.routeName);
+                                  });
+                                },
+                                child: Text("Sign Up")),
+
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  "I've an account ?",
+                                  style: GoogleFonts.quicksand(
+                                      fontSize: 12, color: Colors.black54),
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                TextButton(
+                                    style: TextButton.styleFrom(
+                                        primary: Colors.black),
+                                    onPressed: () {
+                                      Navigator.pushReplacementNamed(
+                                          context, LoginScreen.routeName);
+                                    },
+                                    child: Text("Login")),
+                              ],
+                            ),
+
+                          ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: ageController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                              label: Text("Age"),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: Colors.blue))),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: emailController,
-                          validator: (value) {
-                            bool emailValid = RegExp(
-                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                .hasMatch(value!);
-                            if (value.isEmpty) {
-                              return "please enter email";
-                            } else if (!emailValid) {
-                              return "Please enter valid email";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              label: Text("Email"),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: Colors.blue))),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: PassController,
-                          obscureText: true,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "please enter Password";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              label: Text("Password"),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: Colors.blue),
-                              )),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 70,
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            viewModel.SignUp(emailController.text,
-                                PassController.text, nameController.text, int.parse(ageController.text));
-                            // FireBaseFunctions.createAcoount(
-                            //     nameController.text,
-                            //     int.parse(ageController.text),
-                            //     emailController.text,
-                            //     PassController.text, () {
-                            //       provider.initUser();
-                            //   Navigator.pushReplacementNamed(
-                            //       context, HomeLayout.routeName);
-                            // });
-                          },
-                          child: Text("Sign Up")),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            "I've an account ?",
-                            style: GoogleFonts.quicksand(
-                                fontSize: 12, color: Colors.black54),
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, LoginScreen.routeName);
-                              },
-                              child: Text("Login")),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),

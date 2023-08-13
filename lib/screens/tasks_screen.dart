@@ -20,10 +20,11 @@ class _TasksScreenState extends State<TasksScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        SizedBox(height: 10,),
         DatePicker(
           DateTime.now(),
           initialSelectedDate: DateTime.now(),
-          selectionColor: darkPurple2,
+          selectionColor: darkPurple,
           selectedTextColor: Colors.white,
           height: 120,
           onDateChange: (newdate) {
@@ -33,6 +34,7 @@ class _TasksScreenState extends State<TasksScreen> {
             });
           },
         ),
+        SizedBox(height: 20,),
         
         StreamBuilder(
             stream: FireBaseFunctions.getTasksFromFirestore(date),
